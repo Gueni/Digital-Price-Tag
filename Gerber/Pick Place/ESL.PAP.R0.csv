@@ -1,0 +1,39 @@
+Altium Designer Pick and Place Locations
+D:\WORKSPACE\Digital Price Tag\PCB\..\Gerber\Pick Place\ESL.PAP.R0.csv
+
+========================================================================================================================
+File Design Information:
+
+Date:       13/05/25
+Time:       14:38
+Revision:   Not in VersionControl
+Variant:    No variations
+Units used: mm
+
+"Designator","Layer","Footprint","Center-X(mm)","Center-Y(mm)","Rotation","DES"
+"J3","TopLayer","282834-6","26.4154","11.3538","180","282834-6 -  Bornier fil-à-carte, 2.54 mm, 6 Voies, 30 AWG, 16 AWG, 1.4 mm², Par vis"
+"J1","TopLayer","Battery_Holder","8.7884","13.6144","90","Coin Cell Battery Holders 3012 matte Tin Coin Coin Cell Retainer"
+"R3","TopLayer","RESC1608N","29.2530","18.0040","180","YAGEO (PHYCOMP)  RC0603FR-0710KL  RESISTANCE COUCHE EPAISSE 10K 0.1W 1%"
+"C13","TopLayer","CAPC1608N","20.0660","24.2570","270","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"U1","TopLayer","ANNA-B112-01B","24.9884","26.1644","0","Bluetooth Bluetooth v5.0 Transceiver Module 2.4GHz Integrated, Chip Surface Mount"
+"SW1","TopLayer","SPST-TL3312NF160Q","24.6120","19.3514","0","Tactile Switches 50mA 12VDC .25mm H 160gf SPST 3.7x3.7mm"
+"R2","TopLayer","RESC1608N","48.9832","10.6426","0","CRL0603-FW-R470ELF -  Résistance à puce CMS, Couche épaisse, 0603 [1608 Metric], 0.47 ohm, Série CRL, Couche épaisse"
+"R1","TopLayer","RESC1608N","48.1610","8.1290","270","YAGEO (PHYCOMP)  RC0603FR-0710KL  RESISTANCE COUCHE EPAISSE 10K 0.1W 1%"
+"Q1","TopLayer","MOS-SOT-323-3","50.4980","8.1370","270","MOSFET 30V Vds 12V Vgs SC70-3"
+"L1","TopLayer","IND_2520","50.4880","4.6360","90","Fixed Inductors 10.0uH 460mOhms1.0A +/-20% 2.5x2.0x1.2mm"
+"J2","TopLayer","WR-FPC-68712414022","53.9906","15.5140","90","FFC & FPC Connectors WR-FPC 0.5mm SMT ZIF 24Pin Hrztl Top Cont"
+"D3","TopLayer","DO-SOD-123","45.9570","9.4100","90","Schottky Diodes & Rectifiers 0.5A 30V"
+"D2","TopLayer","DO-SOD-123","40.8310","5.7470","180","Schottky Diodes & Rectifiers 0.5A 30V"
+"D1","TopLayer","DO-SOD-123","40.8370","8.2950","0","Schottky Diodes & Rectifiers 0.5A 30V"
+"C12","TopLayer","CAPC2012N","47.9450","2.7610","90","Multilayer Ceramic Capacitors MLCC - SMD/SMT"
+"C11","TopLayer","CAPC1608N","43.0910","11.1320","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C10","TopLayer","CAPC2012N","45.1360","5.6820","180","Multilayer Ceramic Capacitors MLCC - SMD/SMT"
+"C9","TopLayer","CAPC1608N","49.0594","24.8412","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C8","TopLayer","CAPC1608N","49.0594","23.2664","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C7","TopLayer","CAPC1608N","49.0594","21.6916","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C6","TopLayer","CAPC1608N","49.0594","20.1168","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C5","TopLayer","CAPC1608N","49.0594","18.5420","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C4","TopLayer","CAPC1608N","49.0594","16.9672","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C3","TopLayer","CAPC1608N","49.0594","15.3924","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C2","TopLayer","CAPC1608N","49.0474","13.8176","180","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"
+"C1","TopLayer","CAPC1608N","49.0474","12.2428","0","Multilayer Ceramic Capacitors MLCC - SMD/SMT 1uF 50V X5R +/-10% 0603 Gen Purp"

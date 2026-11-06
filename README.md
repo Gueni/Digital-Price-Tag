@@ -1,135 +1,81 @@
+# Digital Price Tag (ANNA-B112 + E-Ink)
 
-# 📦 Digital Price Tag – ANNA-B112 + E-Ink + CR Battery
+Electronic shelf label (`ESL`, R0) built around the u-blox ANNA-B112
+Bluetooth LE module (nRF52832). It drives a 24-pin SPI e-paper panel through
+the usual on-board boost circuit and runs straight from a coin cell. Prices are
+pushed over BLE from a phone or a gateway.
 
-A low-power, wireless **digital price tag** using:
+| 3D view | 2D layout |
+| --- | --- |
+| [![PCB 3D view](images/pcb-3d-view.png)](images/pcb-3d-view.png) | [![PCB 2D layout](images/pcb-layout-2d.png)](images/pcb-layout-2d.png) |
 
-- **ANNA-B112-01B** Bluetooth LE module  
-- **E-Ink Display** (e.g., 2.13” GDEH0213B72)
-- **CR2032 Battery**
-- Designed for **supermarket shelf labeling**, with OTA updates via BLE
+## On the board
 
----
-<p align="center">
-  <img  src="/2d.png">
-</p>
+| Ref | Part | Role |
+| --- | --- | --- |
+| U1 | ANNA-B112-01B | BLE module (nRF52832) |
+| J2 | Würth 68712414022, 24-pin 0.5 mm FPC | E-paper panel connector (`SCLK`, `SDI`, `CS`, `D/C`, `RES`, `BUSY`) |
+| L1, Q1, D1–D3, R2 | 10 µH + SI1308EDL + MBR0530 ×3 + 0.47 Ω | E-paper gate-voltage boost (`GDR`, `RESE`, `PREVGH`, `PREVGL`) |
+| J1 | Keystone 3092 coin cell holder | Battery (BOM: CR1632), feeds the `3V` rail directly |
+| J3 | TE 282834-6, 6-way 2.54 mm terminal block | Programming / I/O (the sheet carries `SWDIO`, `SWDCLK`, `RESET_N`, `GPIO_14`) |
+| SW1 | TL3312NF160Q | Push button |
 
-<p align="center">
-  <img  src="/3d.png">
-</p>
+The BOM also lists the e-paper panel itself (MPN 4243) and the CR1632 cell as
+non-placed items.
 
+> The previous README called for a CR2032 cell, a 3.3 V LDO and a level
+> shifter. The schematic has no regulator or level shifter: the module and the
+> panel run from the coin cell, and the holder (Keystone 3092) and BOM are for a
+> CR1632.
 
-## 📘 Features
+## Firmware
 
-- BLE-enabled wireless updates via central device (app/gateway)
-- Ultra-low-power mode suitable for coin cell operation
-- Bistable E-Ink display – no power needed to retain the image
-- Custom GATT service for remote pricing updates
-- Sleep current < 2 µA (target)
-- Display refreshes triggered by BLE or timer
+`firmware/` holds a skeleton nRF5 SDK 17.1 project (`nrf52832_xxaa`, S132
+SoftDevice). It defines a price-tag GATT service `0x180C` with a 32-byte price
+string characteristic `0x2A56` and a refresh trigger `0x2A57`. The e-ink SPI
+driver is still a placeholder. `firmware/gateway/ble_gateway.py` is a small
+Python BLE client for pushing prices.
 
----
-
-## 📦 Hardware Components
-
-| Component           | Description                          |
-|--------------------|--------------------------------------|
-| ANNA-B112-01B      | BLE module (nRF52832)                |
-| E-Ink Display       | 2.13” SPI EPD (GDEH0213B72 or similar) |
-| CR2032 Battery     | 3V coin cell                          |
-| LDO Regulator      | 3.3V LDO for stable display voltage   |
-| Level shifter      | Optional, for voltage compatibility  |
-| Passive components | Pull-ups, caps, resistors            |
-
----
-
-## 🧠 Firmware Architecture
-
-- **Nordic SDK** or **nRF Connect SDK (Zephyr RTOS)**
-- **BLE Custom GATT Service**
-  - `UUID 0x180C` – Price Tag Service
-  - Characteristics:
-    - `UUID 0x2A56` – Text/Price (UTF-8 string)
-    - `UUID 0x2A57` – Display Refresh Trigger
-- E-Ink driver via SPI (Waveshare compatible)
-- Deep Sleep using `sd_power_system_off()` until BLE wake or RTC interrupt
-
----
-
-## 🔧 Setup Instructions
-
-1. **Hardware Wiring**
-   - Connect E-Ink SPI lines (CLK, MOSI, CS, DC, RST, BUSY) to ANNA-B112
-   - Power via CR2032 with 3.3V LDO regulator
-   - Add pull-ups for I2C (if used), and decoupling capacitors
-
-2. **Build and Flash**
-   - Clone project and configure for your SDK
-   - Compile using SEGGER Embedded Studio or `west` (if using Zephyr)
-   - Flash via SWD or set up BLE DFU for OTA firmware upgrades
-
-3. **BLE Test**
-   - Install **nRF Connect** mobile app
-   - Scan, connect, and write pricing string to `0x2A56`
-   - Write any value to `0x2A57` to trigger refresh
-
----
-
-## 📉 Power Considerations
-
-| Mode            | Power Consumption |
-|-----------------|-------------------|
-| Sleep (RTC)     | ~1.5 µA           |
-| BLE Advertising | ~10–20 µA average |
-| Display Refresh | ~15–20 mA (spike) |
-
-- Target average: **<10 µA** with infrequent updates
-- Battery Life Estimate: **~1 year** on CR2032
-
----
-
-## 📁 Directory Structure
+## Repository layout
 
 ```
-project/
-├── src/
-│   ├── main.c
-│   ├── ble_price_service.c
-│   └── eink_driver.c
-├── include/
-│   └── eink_driver.h
-├── sdk_config.h
-├── Makefile / CMakeLists.txt
-└── README.md
+0009_digital_price_tag/
+├── PCB/                                       # Altium Designer project
+│   ├── ESL_PCB_Project.PrjPCB                 # Project file (open this)
+│   ├── ESL.SchDoc                             # Schematic
+│   ├── ESL.PcbDoc                             # PCB layout
+│   ├── ESL.PCBDwf                             # Draftsman drawing
+│   ├── OutJob.OutJob                          # Output job
+│   └── Project Outputs for ESL_PCB_Project/   # BOM, Gerbers, STEP and PDFs
+├── firmware/                                  # nRF5 SDK firmware skeleton + BLE gateway script
+└── images/                                    # Renders used in this README
 ```
 
----
+## Component library
 
-## 📡 OTA and Gateway
+This repo stores no libraries. Every part comes from the general Altium library
+in [Gueni/0000_libraries](https://github.com/Gueni/0000_libraries):
 
-Optional BLE gateway (e.g., ESP32, Raspberry Pi) can:
+| File | Used for |
+| --- | --- |
+| [`Altium/DATABASE.DbLib`](https://github.com/Gueni/0000_libraries/blob/master/Altium/DATABASE.DbLib) | Database library the schematic components link to |
+| [`Altium/DB.mdb`](https://github.com/Gueni/0000_libraries/blob/master/Altium/DB.mdb) | Parts database (part numbers, MPNs, suppliers) |
+| [`Altium/SCH.SchLib`](https://github.com/Gueni/0000_libraries/blob/master/Altium/SCH.SchLib) | Schematic symbols |
+| [`Altium/FTP.PcbLib`](https://github.com/Gueni/0000_libraries/blob/master/Altium/FTP.PcbLib) | PCB footprints and 3D models |
 
-- Push price updates over BLE
-- Schedule updates via MQTT / HTTP
-- Manage multiple shelf labels in bulk
+### Setup
 
----
+The project finds the library through a relative path, so clone both repos side
+by side in the same workspace folder:
 
-## 🔄 Future Enhancements
+```
+WORKSPACE/
+├── 0000_libraries/                   # git clone https://github.com/Gueni/0000_libraries.git
+└── 0009_digital_price_tag/           # this repo
+```
 
-- NFC tap-to-update fallback
-- QR code on E-Ink
-- Temp/humidity sensors for smart shelves
-- Battery voltage and signal strength reporting
-
----
-
-## 📚 References
-
-- [ANNA-B112 Datasheet](https://www.u-blox.com/en/product/anna-b1-series)
-- [Nordic nRF52 SDK](https://www.nordicsemi.com/Products/Development-software/nRF5-SDK)
-- [Waveshare E-Ink Displays](https://www.waveshare.com/wiki/Main_Page)
-- [BLE GATT Specifications](https://www.bluetooth.com/specifications/gatt/)
-
----
-
-
+The project file references `..\..\0000_libraries\Altium\DATABASE.DbLib` and
+adds `..\..\0000_libraries\Altium\` as a library search path. The DbLib's
+database path is absolute (`D:\WORKSPACE\0000_libraries\Altium\DB.mdb`); see the
+[library README](https://github.com/Gueni/0000_libraries#setup) if your
+workspace lives elsewhere.
